@@ -5,6 +5,10 @@ The main goal is to have a more friendly way of searching Sphinx.
 
 ---
 
+## Install
+
+	gem install zinx
+
 ## How?
 
 ### Old Way (oficial Ruby API)

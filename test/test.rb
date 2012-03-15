@@ -1,13 +1,12 @@
-require './lib/zinx'
+require 'test/unit'
+require 'zinx'
 
-search 'nike' do
-	puts matches.first.nome
+class ZinxTest < Test::Unit::TestCase
+	extend Zinx::Search
+
+	def test_simple_search
+		result = Zinx::Client.search 'something'
+		assert result.count > 0, 'nothing returned from search'
+		assert_equal result.first.error, ''
+	end
 end
-
-# # # class Test
-# # # 	extend Zinx::Search
-
-# # # 	search 'nike' do 
-# # # 		ap matches
-# # # 	end
-# # # end

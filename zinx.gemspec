@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
 	s.email = 'gabrielhora@gmail.com'
 	s.homepage = 'http://www.polyglotdba.com/zinx'
 	s.files = Dir['lib/**/*.rb'].to_a
+	s.test_files = Dir['test/**/*.rb'].to_a
 end

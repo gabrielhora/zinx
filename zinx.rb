@@ -14,6 +14,8 @@ class Match
 	def method_missing(method, args = {})
 		if ['groupby', 'count', 'expr'].include?("#{method}")
 			@match["attrs"]["@#{method}"]
+		elsif ['id', 'weight', 'attrs'].include?("#{method}")
+			@match["#{method}"]
 		else
 			@match["attrs"]["#{method}"]
 		end
@@ -30,6 +32,9 @@ class Result
 			@matches << Match.new(match)
 		end
 	end
+end
+
+class Zinx < Sphinx::Client
 end
 
 class << self

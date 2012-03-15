@@ -34,6 +34,6 @@ The main goal is to have a more friendly way of searching Sphinx.
 
 ---
 
-I'm building a simple Wiki with more examples, but for now the source code and [email](gabrielhora@gmail.com) are the best ways to find help.
+I'm building a simple Wiki with more examples, but for now the source code is the best ways to find help.
 
 This is a very new project, and in NO WAY done. For now is just something that I did in my time off.

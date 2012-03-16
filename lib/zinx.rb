@@ -186,12 +186,7 @@ module Zinx
 			def search(query, params = {}, &block)
 				params[:query] = query
 				init(params)
-				if !block_given?
-					run
-					return @results
-				else
-					yield self
-				end
+				block_given? ? yield(self) : run
 			end
 
 			def init(params = {})
@@ -219,7 +214,7 @@ module Zinx
 			end
 		end
 
-		def method_missing(method)
+		def method_missing(method, *args, &block)
 			if ['groupby', 'count', 'expr'].include?("#{method}")
 				@match["attrs"]["@#{method}"]
 			elsif ['id', 'weight', 'attrs'].include?("#{method}")
@@ -243,7 +238,7 @@ module Zinx
 			end
 		end
 
-		def method_missing(method)
+		def method_missing(method, *args, &block)
 			@sphinx_hash["#{method}"]
 		end
 	end

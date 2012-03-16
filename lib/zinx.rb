@@ -173,7 +173,6 @@ module Zinx
 			def add_query
 				@multiple_queries = true
 				@client.AddQuery(@query, @index_name)
-				reset
 			end
 
 			# Entry point for searches
@@ -189,7 +188,7 @@ module Zinx
 					run
 					return @results
 				else
-					yield
+					yield self
 				end
 			end
 
@@ -212,9 +211,9 @@ module Zinx
 			@match = hash
 		end
 
-		def each(&block)
+		def each
 			@match.each do |m|
-				block.call m
+				yield m
 			end
 		end
 
@@ -235,8 +234,10 @@ module Zinx
 		def initialize(sphinx_hash)
 			@matches = []
 			@sphinx_hash = sphinx_hash
-			@sphinx_hash["matches"].each do |match|
-				@matches << Match.new(match)
+			if @sphinx_hash.has_key?("matches")
+				@sphinx_hash["matches"].each do |match|
+					@matches << Match.new(match)
+				end
 			end
 		end
 

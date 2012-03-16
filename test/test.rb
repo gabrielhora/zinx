@@ -1,5 +1,7 @@
 require 'test/unit'
 require 'zinx'
+require 'awesome_print'
+require 'zlib'
 
 class ZinxTest < Test::Unit::TestCase
 	def test_simple_search

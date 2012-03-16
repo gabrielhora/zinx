@@ -167,6 +167,8 @@ module Zinx
 					q = @client.Query(@query, @index_name)
 					@results << Result.new(q)
 				end
+
+				@results
 			end
 
 			# add query for multiple queries

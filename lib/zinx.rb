@@ -141,7 +141,6 @@ module Zinx
 
 			def results
 				run if @results.empty?
-				@results
 			end
 
 			# syntax sugar for results[0].matches when using only one query
@@ -163,12 +162,12 @@ module Zinx
 					q.each do |result|
 						@results << Result.new(result)
 					end
+					@results
 				else
 					q = @client.Query(@query, @index_name)
 					@results << Result.new(q)
+					@results.first
 				end
-
-				@results
 			end
 
 			# add query for multiple queries
@@ -186,7 +185,8 @@ module Zinx
 			def search(query, params = {}, &block)
 				params[:query] = query
 				init(params)
-				block_given? ? yield(self) : run
+				yield self if block_given?
+				run
 			end
 
 			def init(params = {})

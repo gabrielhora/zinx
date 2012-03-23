@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
 
 	s.name = 'zinx'
 	s.summary = 'Simple DSL for Sphinx Search Server'
-	s.version = '0.0.5'
-	s.date = '2012-03-15'
+	s.version = '0.0.6'
+	s.date = '2012-03-23'
 	s.description = 'Simple DSL for Sphinx Search Server'
 	s.authors = ['Gabriel Hora']
 	s.email = 'gabrielhora@gmail.com'

@@ -263,7 +263,6 @@ module Zinx
             def init(params = {})
                 @client = Client.new
                 @client.SetServer(params[:server] || 'localhost', params[:port] || 9312)
-                @client.SetMatchMode(params[:match_mode] || Zinx::Client::SPH_MATCH_EXTENDED)
                 @query = params[:query]
                 @index = params[:index] || "*"
                 if params.has_key?("filter")

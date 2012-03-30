@@ -141,7 +141,9 @@ module Zinx
             end
 
             def field_weights(hash)
-                @field_weights = hash
+                hash.each do |k, v|
+                    @field_weights[k] = v
+                end
             end
 
             def index_weight(index, weight)
@@ -149,7 +151,9 @@ module Zinx
             end
 
             def index_weights(hash)
-                @index_weights = hash
+                hash.each do |k, v|
+                    @index_weights[k] = v
+                end
             end
 
             def id_range(min, max)

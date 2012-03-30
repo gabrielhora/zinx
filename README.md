@@ -3,37 +3,86 @@
 Zinx is a Ruby DSL for the [Sphinx Search Engine](http://www.sphinxsearch.com) (which is used in a lot of [big sites](http://sphinxsearch.com/info/powered/)). It is a simple wrapper around the oficial Ruby API.
 The main goal is to have a more friendly way of searching Sphinx.
 
+Most methods are just a wrap around the corresponding Sphinx API method. Best thing to do is to read the code, it's quite simple.
+
 ---
 
 ## Install
 
 	gem install zinx
 
-## How?
+## Examples
 
-### Old Way (oficial Ruby API)
+### Configuring
 
-	sph = Sphinx::Client.new
-	sph.SetFilter("some_filter", [1])
-	sph.SetFilter("some_other_filter", ['bla bla bla'])
-	sph.SetSortMode(Sphinx::Client::SPH_SORT_EXPR, "@weight + relevant_column")
-	sph.SetGroupBy("some_mva", Sphinx::Client::SPH_GROUPBY_ATTR)
-	sph.SetSelect("@groupby, @count")
-	results = sph.Query('my query', "*")
+	match_mode :extended
+	ranking_mode :word_count
+	field_weight 'field1', 1000
+	field_weights {'field1' => 1000, 'field2' => 50}
+	index_weight 'index1', 400
+	index_weights {'index2' => 100, 'index3' => 231}
 
-### Better Way (using Zinx)
+### Simple Search
 
-	search 'my query' do
-		filter 'some_filter', 1
-		filter 'some_other_filter', 'bla bla bla'
-		sort Sphinx::Client::SPH_SORT_EXPR, '@weight + relevant_column'
-		group Sphinx::Client::SPH_GROUPBY_ATTR, 'some_mva'
-		select '@groupby, @count'
-		matches # this is the result of running the query
+	results = search 'simple'
+
+### Filtering
+
+	results = search 'simple', :filter => {'field': 'value'}
+	# or
+	results = search 'simple' do
+		filter 'field', 'value'
 	end
 
----
+### Sorting
 
-I'm building a simple Wiki with more examples, but for now the source code is the best ways to find help.
+	results = search 'simple', :sort => {:expr: '@weight + 10'}
+	# or
+	results = search 'simple' do
+		sort :expr, '@weight + 10'
+	end
 
-This is a very new project, and in NO WAY done. For now is just something that I did in my time off.
+### Grouping
+
+	results = search 'simple', :group => {:attr: 'field'}
+	# or
+	results = search 'simple' do
+		group :attr, 'field'
+	end
+
+### Select List
+
+	results = search 'simple', :select => 'field1, field2, field3'
+	# or
+	results = search 'simple' do
+		select 'field1, field2, field3'
+	end
+
+### Multiple Queries
+
+	# this will return an array of 3 results
+	results = search 'simple' do
+		filter 'field', 'value'
+		sort :expr, '@weight + 10'
+		add_query
+
+		filter 'field2', 'value2'
+		group :attr, 'field2'
+		add_query
+
+		reset_groups
+		select 'SUM(1) AS total'
+		group :attr, 'total'
+		add_query
+	end
+
+### Accessing Result Information
+
+	results = search 'simple', :select => 'field1, field2, @weight'
+	# error?
+	puts results.first.error
+	# matches
+	puts results.matches
+	# accessig fields
+	puts results.matches.first.field1
+	puts results.matches.first.weight

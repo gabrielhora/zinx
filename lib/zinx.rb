@@ -367,7 +367,7 @@ module Zinx
 
     self.target = Zinx::Client
 
-    delegate :filter, :filter_range, :filter_float_range, :sort, :group, :group_distinct,
+    delegate :st, :crc, :filter, :filter_range, :filter_float_range, :sort, :group, :group_distinct,
     :select, :last_error, :last_warning, :server, :limits, :max_query_time, :match_mode,
     :ranking_mode, :field_weight, :field_weights, :index_weight, :index_weights,
     :id_range, :geo_anchor, :retries, :override, :reset, :reset_filter, :reset_groups,

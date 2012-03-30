@@ -9,10 +9,10 @@ class ZinxTest < Test::Unit::TestCase
   end
 
   def test_stemming
-  	assert_equal Zinx::Client.st('computer'), 'comput'
+    assert_equal Zinx::Client.st('computer'), 'comput'
   end
 
   def test_crc
-  	assert_equal Zinx::Client.crc('computer'), 2727913382
+    assert_equal Zinx::Client.crc('computer'), 2727913382
   end
 end

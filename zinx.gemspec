@@ -13,4 +13,5 @@ Gem::Specification.new do |s|
 	s.homepage = 'https://github.com/gabrielhora/zinx'
 	s.files = Dir['lib/**/*.rb'].to_a
 	s.test_files = Dir['test/**/*.rb'].to_a
+	s.add_dependency('ruby-stemmer')
 end

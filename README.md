@@ -28,7 +28,7 @@ Most methods are just a wrap around the corresponding Sphinx API method. Best th
 
 ### Filtering
 
-	results = search 'simple', :filter => {'field': 'value'}
+	results = search 'simple', :filter => {'field' => 'value'}
 	# or
 	results = search 'simple' do
 		filter 'field', 'value'
@@ -36,7 +36,7 @@ Most methods are just a wrap around the corresponding Sphinx API method. Best th
 
 ### Sorting
 
-	results = search 'simple', :sort => {:expr: '@weight + 10'}
+	results = search 'simple', :sort => {:expr => '@weight + 10'}
 	# or
 	results = search 'simple' do
 		sort :expr, '@weight + 10'
@@ -44,7 +44,7 @@ Most methods are just a wrap around the corresponding Sphinx API method. Best th
 
 ### Grouping
 
-	results = search 'simple', :group => {:attr: 'field'}
+	results = search 'simple', :group => {:attr => 'field'}
 	# or
 	results = search 'simple' do
 		group :attr, 'field'

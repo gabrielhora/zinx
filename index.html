@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Zinx by gabrielhora</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Zinx</h1>
+        <h2>Simple Sphinx Search DSL in Ruby</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/gabrielhora/zinx/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/gabrielhora/zinx/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/gabrielhora/zinx" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Zinx</h1>
+
+<p>Zinx is a Ruby DSL for the <a href="http://www.sphinxsearch.com">Sphinx Search Engine</a> (which is used in a lot of <a href="http://sphinxsearch.com/info/powered/">big sites</a>). It is a simple wrapper around the oficial Ruby API.
+The main goal is to have a more friendly way of searching Sphinx.</p>
+
+<p>Most methods are just a wrap around the corresponding Sphinx API method. Best thing to do is to read the code, it's quite simple.</p>
+
+<hr><h2>Install</h2>
+
+<pre><code>gem install zinx
+</code></pre>
+
+<h2>Examples</h2>
+
+<h3>Configuring</h3>
+
+<pre><code>match_mode :extended
+ranking_mode :word_count
+field_weight 'field1', 1000
+field_weights {'field1' =&gt; 1000, 'field2' =&gt; 50}
+index_weight 'index1', 400
+index_weights {'index2' =&gt; 100, 'index3' =&gt; 231}
+</code></pre>
+
+<h3>Simple Search</h3>
+
+<pre><code>results = search 'simple'
+</code></pre>
+
+<h3>Filtering</h3>
+
+<pre><code>results = search 'simple', :filter =&gt; {'field' =&gt; 'value'}
+# or
+results = search 'simple' do
+    filter 'field', 'value'
+end
+</code></pre>
+
+<h3>Sorting</h3>
+
+<pre><code>results = search 'simple', :sort =&gt; {:expr =&gt; '@weight + 10'}
+# or
+results = search 'simple' do
+    sort :expr, '@weight + 10'
+end
+</code></pre>
+
+<h3>Grouping</h3>
+
+<pre><code>results = search 'simple', :group =&gt; {:attr =&gt; 'field'}
+# or
+results = search 'simple' do
+    group :attr, 'field'
+end
+</code></pre>
+
+<h3>Select List</h3>
+
+<pre><code>results = search 'simple', :select =&gt; 'field1, field2, field3'
+# or
+results = search 'simple' do
+    select 'field1, field2, field3'
+end
+</code></pre>
+
+<h3>Multiple Queries</h3>
+
+<pre><code># this will return an array of 3 results
+results = search 'simple' do
+    filter 'field', 'value'
+    sort :expr, '@weight + 10'
+    add_query
+
+    filter 'field2', 'value2'
+    group :attr, 'field2'
+    add_query
+
+    reset_groups
+    select 'SUM(1) AS total'
+    group :attr, 'total'
+    add_query
+end
+</code></pre>
+
+<h3>Accessing Result Information</h3>
+
+<pre><code>results = search 'simple', :select =&gt; 'field1, field2, @weight'
+# error?
+puts results.first.error
+# matches
+puts results.matches
+# accessig fields
+puts results.matches.first.field1
+puts results.matches.first.weight
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>

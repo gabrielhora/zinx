@@ -314,6 +314,8 @@ module Zinx
   end
 
   class Match
+    attr_accessor :match
+
     def initialize(hash)
       @match = hash
     end
